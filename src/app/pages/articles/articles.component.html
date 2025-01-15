@@ -1,0 +1,81 @@
+<main class="flex flex-col px-20 gap-10 pb-20">
+    
+    <!-- Title -->
+    <div class="w-full m-auto bg-slate-100 rounded-lg flex flex-col items-center justify-center gap-5 py-10">
+        <h1 class="font-montserrat text-slate-500text-lg">Welcome to Buletin</h1>
+            <div class="flex gap-2 text-3xl w-1/2 items-center font-bold text-center leading-normal">
+                <p>Craft narrative ✍🏽 that ignite <span class="text-pink-600">inspiration</span>💡, <span class="text-pink-600">knowloedge 📕 </span><span class="text-pink-600"> entertainment</span> 🎬</p> 
+            </div>
+    </div>
+
+    <!-- Last article -->
+
+    <div (click)="goToArticle(lastArticle())" class="flex gap-10 justify-between cursor-pointer">
+        <div class="w-1/2 rounded-lg">
+            <img class="rounded-lg" src={{lastArticle()?.image}}/>
+        </div>
+        <div class="w-1/2 flex flex-col gap-4 justify-start">
+            <div class="text-slate-500 flex justify-start gap-2 items-center">
+                <img class="rounded-full h-[25px]" src="/img/image.png"/>
+                <span>{{lastArticle()?.source}}</span>
+                <p>12 minutes ago</p>
+            </div>
+            <h2 class="text-6xl">{{lastArticle()?.title}}</h2>
+            <p class="text-slate-500">{{lastArticle()?.description}}</p>
+            <div class="text-slate-500 flex justify-start gap-2">
+                <span class="text-pink-600">{{lastArticle()?.category}}</span>
+                <p>{{lastArticle()?.time}} read</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Articles -->
+     <div class="flex flex-col gap-5">
+        <div class="flex justify-between">
+            <span class="text-4xl">Latest News</span>
+            <span class="text-pink-600 font-bold">See all -></span>
+         </div>
+
+         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 place-items-center">
+            
+            @for (article of articles().slice(0,4); track article;){
+        
+            <div (click)="goToArticle(article)" class="flex flex-col w-3/4 gap-4 cursor-pointer">
+                <img class="rounded-lg w-full h-[200px] object-cover" src={{article.image}} alt="">
+                <div class="text-slate-500 flex justify-start gap-2 items-center text-[10px]">
+                    <img class="rounded-full h-[25px]" src="/img/image.png"/>
+                    <span>{{article.source}}</span>
+                    <p>12 minutes ago</p>
+                </div>
+                <h2 class="text-xl">{{article.title}}</h2>
+                <p class="text-slate-500">{{article.description.substr(0,100)}}</p>
+                <div class="text-slate-500 flex justify-start gap-2">
+                    <span class="text-pink-600">{{article.category}}</span>
+                    <p>{{article.time}} read</p>
+                </div>
+            </div>
+        }
+
+         </div>
+     </div>
+
+    <!-- Stories -->
+    <div class="flex flex-col gap-5">
+        <div class="flex justify-between">
+            <span class="text-4xl">Buletin Story</span>
+            <span class="text-pink-600 font-bold">See all -></span>
+         </div>
+
+         <div class="flex items-center gap-4">
+            @for(source of sources(); track source){
+
+            <div class="flex flex-col items-center gap-2">
+                <img class="h-[80px] w-[80px] rounded-full" src={{source.image}} alt="">
+                <span>{{source.name}}</span>
+            </div>
+        }
+         </div>
+    </div>
+
+</main>
+  
