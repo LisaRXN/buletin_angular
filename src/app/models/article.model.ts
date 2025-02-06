@@ -10,6 +10,5 @@ export class Article implements IArticle {
     time: string = "5 min"
     createdAt: Date = new Date()
 
-
 }
 

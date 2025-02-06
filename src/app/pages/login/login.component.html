@@ -1,0 +1,11 @@
+<div class="flex items-start justify-center w-full h-screen py-10">
+    <form [formGroup]="loginFormGroup" (submit)="login()" class="bg-slate-200 relative flex flex-col p-10 rounded-lg gap-4 shadow-lg w-1/3"
+    >
+    <input type="text" name="email" formControlName="email" placeholder="Email" class="w-full rounded-md p-2"/>
+    <input type="password" name="password" formControlName="password" placeholder="Password" class="w-full rounded-md p-2"/>
+    <a class="text-sm underline self-end">Forgot my password</a>
+    <button type="submit" class="bg-slate-400 text-white hover:bg-pink-500 duration-300 py-2 px-5 rounded-lg self-end">Login</button>
+    <div class="flex gap-2 items-center justify-center text-slate-800 w-full pt-5 text-sm"><span>Don't have an account?</span><a href="/register" class="font-bold">Sign Up</a></div>
+    </form>
+
+</div>

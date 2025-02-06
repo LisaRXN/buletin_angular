@@ -1,69 +1,106 @@
 <div class="px-10 sm:px-20 md:px-40 flex flex-col items-center">
+  <h1 class="font-raleway font-bold text-4xl p-10">{{ article?.title }}</h1>
+  <img class="rounded-lg" src="{{ article?.image }}" alt="" />
 
-    <h1 class="font-raleway font-bold text-4xl p-10">{{article?.title}}</h1>
-    <img class="rounded-lg" src="{{article?.image}}" alt="">
-
-    <div class="flex flex-col gap-4 py-10">
-
+  <div class="flex flex-col gap-4 py-10">
     <div class="text-slate-500 flex justify-start gap-2 items-center">
-        <img class="rounded-full h-[25px]" src="/img/image.png"/>
-        <span>{{article?.source}}</span>
-        <p>12 minutes ago</p>
+      <img class="rounded-full h-[25px]" src="/img/image.png" />
+      <span>{{ article?.source }}</span>
+      <p>12 minutes ago</p>
     </div>
     <div class="text-slate-500 flex justify-start gap-2">
-        <span class="text-pink-600">{{article?.category}}</span>
-        <p>{{article?.time}} read</p>
+      <span class="text-pink-600">{{ article?.category }}</span>
+      <p>{{ article?.time }} read</p>
     </div>
-    <p class="text-slate-500">{{article?.description}}</p>
-</div>
+    <p class="text-slate-500">{{ article?.description }}</p>
+  </div>
 
-
-<div class="flex flex-col items-start w-full">
-
+  <div class="flex flex-col items-start w-full">
     <span class="text-4xl">Let's comment</span>
-    
+
     <div class="py-10 w-full flex flex-col gap-5">
-
-        <div class="p-5 rounded-md bg-slate-100 flex w-full gap-4 items-center">
-            <img class="rounded-full w-[50px] h-[50px] object-cover" src="/img/user1.png" alt="">
-            <div class="flex flex-col gap-2 justify-center">
-                <div class="flex items-center gap-4">
-                    <span>Username</span>
-                    <span class="text-slate-500">14 jan 2025</span>
-                </div>
-                <div class="text-slate-500">This is the comment of the user</div>
-            </div>
+        
+      @if(authService.user()){
+      <div class="flex items-center justify-start gap-5">
+        <div (click)="like()" class="flex items-center justify-start gap-2">
+          <img
+            [src]="isLiked ? '/img/icons/liked.png' : '/img/icons/like.png'"
+            class="h-[25px] w-auto cursor-pointer"
+            alt=""
+          />
+          <span>1</span>
         </div>
-        <div class="p-5 rounded-md bg-slate-100 flex w-full gap-4 items-center">
-            <img class="rounded-full w-[50px] h-[50px] object-cover" src="/img/user1.png" alt="">
-            <div class="flex flex-col gap-2 justify-center">
-                <div class="flex items-center gap-4">
-                    <span>Username</span>
-                    <span class="text-slate-500">14 jan 2025</span>
-                </div>
-                <div class="text-slate-500">This is the comment of the user</div>
-            </div>
+        <div
+          (click)="openComment()"
+          class="flex items-center justify-start gap-2"
+        >
+          <img
+            src="/img/icons/comment.png"
+            class="h-[25px] w-auto cursor-pointer"
+            alt=""
+          />
+          <span>1</span>
         </div>
-        <div class="p-5 rounded-md bg-slate-100 flex w-full gap-4 items-center">
-            <img class="rounded-full w-[50px] h-[50px] object-cover" src="/img/user1.png" alt="">
-            <div class="flex flex-col gap-2 justify-center">
-                <div class="flex items-center gap-4">
-                    <span>Username</span>
-                    <span class="text-slate-500">14 jan 2025</span>
-                </div>
-                <div class="text-slate-500">This is the comment of the user</div>
-            </div>
+        <div class="flex items-center justify-start gap-2">
+          <img
+            src="/img/icons/share.png"
+            class="h-[25px] w-auto cursor-pointer"
+            alt=""
+          />
         </div>
-
-
+      </div>
+      }
+      @if(isOpenComment){
+        <p class="text-red-600 text-sm">{{errorMessage}}</p>
+      <form
+        [formGroup]="reviewFormGroup"
+        (submit)="sendComment($event)"
+        class="p-5 rounded-md bg-slate-100 flex w-full gap-4 items-center"
+      >
+        <img
+          class="rounded-full w-[50px] h-[50px] object-cover"
+          src="/img/image.png"
+          alt=""
+        />
+        <div class="flex flex-col gap-2 justify-center w-full">
+          <div class="flex items-center gap-4">
+            <span type="text">Lisa RXN</span>
+          </div>
+          <input
+            type="text"
+            id="content"
+            name="content"
+            formControlName="content"
+            placeholder="Write your comment here..."
+            class="text-slate-500 bg-slate-100 w-full"
+          />
+        </div>
+        <button
+          type="sumbit"
+          [disabled]="reviewFormGroup.invalid"
+          class="bg-slate-300 rounded-lg text-white py-2 px-5 hover:bg-pink-500 duration-300 cursor-pointer"
+        >
+          Send
+        </button>
+      </form>
+      } @for (review of reviews; track review.id;){
+      <div class="p-5 rounded-md bg-slate-100 flex w-full gap-4 items-center">
+        <img
+          class="rounded-full w-[50px] h-[50px] object-cover"
+          [src]="review?.avatar"
+          alt=""
+        />
+        <div class="flex flex-col gap-2 justify-center">
+          <div class="flex items-center gap-4">
+            <span>{{ review?.firstname }}</span>
+            <span class="text-slate-500">{{
+              review?.createdAt | date : "d MMMM yyyy"
+            }}</span>
+          </div>
+          <div class="text-slate-500">{{ review.content }}</div>
+        </div>
+      </div>
+      }
     </div>
-
-
-
-</div>
-
-
-
-
-
+  </div>
 </div>
